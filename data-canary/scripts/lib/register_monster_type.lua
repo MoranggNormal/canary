@@ -157,6 +157,9 @@ registerMonsterType.enemyFactions = function(mtype, mask)
 end
 registerMonsterType.flags = function(mtype, mask)
 	if mask.flags then
+		if mask.flags.catchChance ~= nil then
+			mtype:catchChance(mask.flags.catchChance)
+		end
 		if mask.flags.attackable ~= nil then
 			mtype:isAttackable(mask.flags.attackable)
 		end

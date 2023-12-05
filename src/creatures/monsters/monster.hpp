@@ -10,6 +10,7 @@
 #pragma once
 
 #include "creatures/monsters/monsters.hpp"
+#include "lua/functions/creatures/monster/monster_type_functions.hpp"
 #include "declarations.hpp"
 #include "items/tile.hpp"
 
@@ -97,6 +98,11 @@ public:
 			return master->getMonster()->isEnemyFaction(faction);
 		}
 		return mType->info.enemyFactions.empty() ? false : mType->info.enemyFactions.contains(faction);
+	}
+
+
+	uint32_t catchChance() const {
+		return mType->info.catchChance;
 	}
 
 	bool isPushable() override {
@@ -438,9 +444,12 @@ private:
 	uint64_t getLostExperience() const override {
 		return skillLoss ? mType->info.experience : 0;
 	}
+
+	public:
 	uint16_t getLookCorpse() const override {
 		return mType->info.lookcorpse;
 	}
+
 	void dropLoot(std::shared_ptr<Container> corpse, std::shared_ptr<Creature> lastHitCreature) override;
 	void getPathSearchParams(const std::shared_ptr<Creature> &creature, FindPathParams &fpp) override;
 	bool useCacheMap() const override {
@@ -448,6 +457,7 @@ private:
 	}
 
 	friend class MonsterFunctions;
+	friend class MonsterTypeFunctions;
 	friend class Map;
 
 	static std::vector<std::pair<int8_t, int8_t>> getPushItemLocationOptions(const Direction &direction);

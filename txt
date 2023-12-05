@@ -1,0 +1,11 @@
+ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+
+netsh interface portproxy add v4tov4 listenport=7171 listenaddress=127.0.0.1 connectport=7171 connectaddress=172.20.13.242
+
+sudo lsof -i :7171
+
+sudo kill -9 PID
+
+src\items\item.cpp:3056
+
+cmake -DCMAKE_TOOLCHAIN_FILE=~/vcpkg/scripts/buildsystems/vcpkg.cmake .. --preset linux-release

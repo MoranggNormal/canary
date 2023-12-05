@@ -251,6 +251,83 @@ int ItemFunctions::luaItemGetWeight(lua_State* L) {
 	return 1;
 }
 
+int ItemFunctions::luaItemGetPokeLevel(lua_State* L) {
+	// item:getPokeLevel()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeLevel());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeBoost(lua_State* L) {
+	// item:getPokeBoost()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeBoost());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeExperience(lua_State* L) {
+	// item:getPokeExperience()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeExperience());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeMaxHealth(lua_State* L) {
+	// item:getPokeMaxHealth()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeMaxHealth());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeHealth(lua_State* L) {
+	// item:getPokeHealth()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeHealth());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeLove(lua_State* L) {
+	// item:getPokeLove()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getPokeLove());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemFunctions::luaItemGetPokeName(lua_State* L) {
+	// item:getPokeName()
+	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);
+	if (item) {
+		pushString(L, item->getPokeName());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int ItemFunctions::luaItemGetSubType(lua_State* L) {
 	// item:getSubType()
 	std::shared_ptr<Item> item = getUserdataShared<Item>(L, 1);

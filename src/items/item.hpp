@@ -327,6 +327,48 @@ public:
 		return items[id].weight;
 	}
 
+	uint32_t getPokeLevel() const {
+		if (hasAttribute(ItemAttribute_t::POKELEVEL)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKELEVEL);
+		}
+		return items[id].pokeLevel;
+	}
+
+	uint32_t getPokeBoost() const {
+		if (hasAttribute(ItemAttribute_t::POKEBOOST)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKEBOOST);
+		}
+		return items[id].pokeBoost;
+	}
+
+	uint32_t getPokeExperience() const {
+		if (hasAttribute(ItemAttribute_t::POKEEXPERIENCE)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKEEXPERIENCE);
+		}
+		return items[id].pokeExperience;
+	}
+
+	uint32_t getPokeMaxHealth() const {
+		if (hasAttribute(ItemAttribute_t::POKEMAXHEALTH)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKEMAXHEALTH);
+		}
+		return items[id].pokeMaxHealth;
+	}
+
+	uint32_t getPokeHealth() const {
+		if (hasAttribute(ItemAttribute_t::POKEHEALTH)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKEHEALTH);
+		}
+		return items[id].pokeHealth;
+	}
+
+	uint32_t getPokeLove() const {
+		if (hasAttribute(ItemAttribute_t::POKELOVE)) {
+			return getAttribute<uint32_t>(ItemAttribute_t::POKELOVE);
+		}
+		return items[id].pokeLove;
+	}
+
 	int32_t getCleavePercent() const {
 		return items[id].abilities->cleavePercent;
 	}
@@ -483,6 +525,12 @@ public:
 			return getString(ItemAttribute_t::NAME);
 		}
 		return items[id].name;
+	}
+	const std::string &getPokeName() const {
+		if (hasAttribute(ItemAttribute_t::POKENAME)) {
+			return getString(ItemAttribute_t::POKENAME);
+		}
+		return items[id].pokeName;
 	}
 	const std::string getPluralName() const {
 		if (hasAttribute(ItemAttribute_t::PLURALNAME)) {

@@ -46,6 +46,8 @@ int MonsterTypeFunctions::luaMonsterTypeCreate(lua_State* L) {
 	std::shared_ptr<MonsterType> monsterType = nullptr;
 	if (isNumber(L, 2)) {
 		monsterType = g_monsters().getMonsterTypeByRaceId(getNumber<uint16_t>(L, 2));
+	} else if (isNumber(L, 3)) {
+		monsterType = g_monsters().getMonsterTypeByCorpseId(getNumber<uint16_t>(L, 3));
 	} else {
 		monsterType = g_monsters().getMonsterType(getString(L, 2));
 	}
@@ -53,6 +55,48 @@ int MonsterTypeFunctions::luaMonsterTypeCreate(lua_State* L) {
 	if (monsterType) {
 		pushUserdata<MonsterType>(L, monsterType);
 		setMetatable(L, -1, "MonsterType");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int MonsterTypeFunctions::luaMonsterTypeCorpseById(lua_State* L) {
+	auto corpseId = getNumber<uint16_t>(L, 2);
+	bool found = false;
+
+	std::shared_ptr<MonsterType> monsterType = nullptr;
+
+	for (const auto &[_, monster] : g_game().getMonsters()) {
+		if (monster->getLookCorpse() == corpseId) {
+			monsterType = g_monsters().getMonsterType(monster->getName());
+			if (monsterType) {
+				pushUserdata<MonsterType>(L, monsterType);
+				setMetatable(L, -1, "MonsterType");
+				found = true;
+				break;
+			}
+		}
+	}
+
+	if (!found) {
+		lua_pushnil(L); // Empurra 'nil' se nenhum monstro correspondente for encontrado
+	}
+
+	return 1;
+}
+
+
+// pokemon
+
+int MonsterTypeFunctions::luaMonsterTypeCatchChance(lua_State* L) {
+	// get: monsterType:critChance() set: monsterType:critChance(int)
+	const auto monsterType = getUserdataShared<MonsterType>(L, 1);
+	if (monsterType) {
+		if (lua_gettop(L) == 2) {
+			monsterType->info.catchChance = getNumber<uint16_t>(L, 2);
+		}
+		lua_pushnumber(L, monsterType->info.catchChance);
 	} else {
 		lua_pushnil(L);
 	}

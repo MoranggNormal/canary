@@ -57,12 +57,13 @@ monster.flags = {
 	canPushCreatures = true,
 	staticAttackChance = 70,
 	targetDistance = 1,
-	runHealth = 0,
+	runHealth = 44,
 	healthHidden = false,
 	isBlockable = false,
 	canWalkOnEnergy = false,
 	canWalkOnFire = true,
 	canWalkOnPoison = true,
+	catchChance = 4412
 }
 
 monster.light = {

@@ -22,6 +22,7 @@
 #include "creatures/players/imbuements/imbuements.hpp"
 #include "lua/creature/actions.hpp"
 #include "creatures/combat/spells.hpp"
+#include "item.hpp"
 
 #define ITEM_IMBUEMENT_SLOT 500
 
@@ -498,6 +499,75 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream &propStream) {
 			break;
 		}
 
+		case ATTR_POKENAME: {
+			std::string pokeName;
+			if (!propStream.readString(pokeName)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKENAME, pokeName);
+			break;
+		}
+
+		case ATTR_POKELEVEL: {
+			uint32_t pokeLevel;
+			if (!propStream.read<uint32_t>(pokeLevel)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKELEVEL, pokeLevel);
+			break;
+		}
+		case ATTR_POKEBOOST: {
+			uint32_t pokeBoost;
+			if (!propStream.read<uint32_t>(pokeBoost)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKEBOOST, pokeBoost);
+			break;
+		}
+
+		case ATTR_POKEEXPERIENCE: {
+			uint32_t pokeExperience;
+			if (!propStream.read<uint32_t>(pokeExperience)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKEEXPERIENCE, pokeExperience);
+			break;
+		}
+
+		case ATTR_POKEMAXHEALTH: {
+			uint32_t pokeMaxHealth;
+			if (!propStream.read<uint32_t>(pokeMaxHealth)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKEMAXHEALTH, pokeMaxHealth);
+			break;
+		}
+
+		case ATTR_POKEHEALTH: {
+			uint32_t pokeHealth;
+			if (!propStream.read<uint32_t>(pokeHealth)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKEHEALTH, pokeHealth);
+			break;
+		}
+
+		case ATTR_POKELOVE: {
+			uint32_t pokeLove;
+			if (!propStream.read<uint32_t>(pokeLove)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setAttribute(ItemAttribute_t::POKELOVE, pokeLove);
+			break;
+		}
+
 		case ATTR_ARTICLE: {
 			std::string article;
 			if (!propStream.readString(article)) {
@@ -861,6 +931,11 @@ void Item::serializeAttr(PropWriteStream &propWriteStream) const {
 		propWriteStream.writeString(getString(ItemAttribute_t::NAME));
 	}
 
+	if (hasAttribute(ItemAttribute_t::POKENAME)) {
+		propWriteStream.write<uint8_t>(ATTR_POKENAME);
+		propWriteStream.writeString(getString(ItemAttribute_t::POKENAME));
+	}
+
 	if (hasAttribute(ItemAttribute_t::ARTICLE)) {
 		propWriteStream.write<uint8_t>(ATTR_ARTICLE);
 		propWriteStream.writeString(getString(ItemAttribute_t::ARTICLE));
@@ -869,6 +944,36 @@ void Item::serializeAttr(PropWriteStream &propWriteStream) const {
 	if (hasAttribute(ItemAttribute_t::PLURALNAME)) {
 		propWriteStream.write<uint8_t>(ATTR_PLURALNAME);
 		propWriteStream.writeString(getString(ItemAttribute_t::PLURALNAME));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKELEVEL)) {
+		propWriteStream.write<uint8_t>(ATTR_POKELEVEL);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKELEVEL));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKEBOOST)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEBOOST);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKEBOOST));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKEEXPERIENCE)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEEXPERIENCE);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKEEXPERIENCE));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKEMAXHEALTH)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEMAXHEALTH);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKEMAXHEALTH));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKEHEALTH)) {
+		propWriteStream.write<uint8_t>(ATTR_POKEHEALTH);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKEHEALTH));
+	}
+
+	if (hasAttribute(ItemAttribute_t::POKELOVE)) {
+		propWriteStream.write<uint8_t>(ATTR_POKELOVE);
+		propWriteStream.write<uint32_t>(getAttribute<uint32_t>(ItemAttribute_t::POKELOVE));
 	}
 
 	if (hasAttribute(ItemAttribute_t::WEIGHT)) {
@@ -1005,6 +1110,30 @@ uint32_t Item::getWeight() const {
 	}
 	return baseWeight;
 }
+
+// Item::getPokeLevel() const {
+// 	return getPokeLevel();
+// }
+
+// uint32_t Item::getPokeBoost() const {
+// 	return getPokeBoost();
+// }
+
+// uint32_t Item::getPokeExperience() const {
+// 	return getPokeExperience();
+// }
+
+// uint32_t Item::getPokeMaxHealth() const {
+// 	return getPokeMaxHealth();
+// }
+
+// uint32_t Item::getPokeHealth() const {
+// 	return getPokeHealth();
+// }
+
+// uint32_t Item::getPokeLove() const {
+// 	return getPokeLove();
+// }
 
 std::vector<std::pair<std::string, std::string>>
 Item::getDescriptions(const ItemType &it, std::shared_ptr<Item> item /*= nullptr*/) {
@@ -2922,6 +3051,85 @@ std::string Item::getDescription(const ItemType &it, int32_t lookDistance, std::
 	} else if (lookDistance <= 1 && !it.description.empty()) {
 		s << std::endl
 		  << it.description;
+	}
+
+	// pokemon
+
+	if (item) {
+		const std::string &pokeName = item->getAttribute<std::string>(ItemAttribute_t::POKENAME);
+		if (!pokeName.empty()) {
+			s << std::endl
+			  << "It contains a" << pokeName;
+		} else if (lookDistance <= 1 && !it.pokeName.empty()) {
+			s << std::endl
+			  << "It contains a" << it.pokeName;
+		}
+	}
+
+	if (item) {
+		const uint32_t pokeLevel = item->getAttribute<uint32_t>(ItemAttribute_t::POKELEVEL);
+		if (pokeLevel != 0 && it.pickupable) {
+			s << std::endl
+			  << "It is at level " << pokeLevel;
+		}
+	} else if (it.pokeLevel != 0 && it.pickupable) {
+		s << std::endl
+		  << "It is at level " << it.pokeLevel;
+	}
+
+	if (item) {
+		const uint32_t pokeExperience = item->getAttribute<uint32_t>(ItemAttribute_t::POKEEXPERIENCE);
+		if (pokeExperience != 0 && it.pickupable) {
+			s << std::endl
+			  << "It has " << pokeExperience << " experience points";
+		}
+	} else if (it.pokeExperience != 0 && it.pickupable) {
+		s << std::endl
+		  << "It has " << it.pokeExperience << " experience points";
+	}
+
+	if (item) {
+		const uint32_t pokeBoost = item->getAttribute<uint32_t>(ItemAttribute_t::POKEBOOST);
+		if (pokeBoost != 0 && it.pickupable) {
+			s << std::endl
+			  << "Boost: +" << pokeBoost;
+		}
+	} else if (it.pokeBoost != 0 && it.pickupable) {
+		s << std::endl
+		  << "Boost: +" << it.pokeBoost;
+	}
+
+	if (item) {
+		const uint32_t pokeHealth = item->getAttribute<uint32_t>(ItemAttribute_t::POKEHEALTH);
+		const uint32_t pokeMaxHealth = item->getAttribute<uint32_t>(ItemAttribute_t::POKEMAXHEALTH);
+		if (pokeMaxHealth != 0 && it.pickupable) {
+			if (pokeHealth > 0) {
+				s << std::endl
+				  << "Life: " << pokeHealth << "/" << pokeMaxHealth;
+			} else {
+				s << std::endl
+				  << "It is fainted";
+			}
+		}
+	} else if (it.pokeMaxHealth != 0 && it.pickupable) {
+		if (it.pokeHealth > 0) {
+			s << std::endl
+			  << "Life: " << it.pokeHealth << "/" << it.pokeMaxHealth;
+		} else {
+			s << std::endl
+			  << "It is fainted";
+		}
+	}
+
+	if (item) {
+		const uint32_t pokeLove = item->getAttribute<uint32_t>(ItemAttribute_t::POKELOVE);
+		if (pokeLove != 0 && it.pickupable) {
+			s << std::endl
+			  << "Love: +" << pokeLove;
+		}
+	} else if (it.pokeLove != 0 && it.pickupable) {
+		s << std::endl
+		  << "Love: +" << it.pokeLove;
 	}
 
 	if (it.allowDistRead && it.id >= 7369 && it.id <= 7371) {

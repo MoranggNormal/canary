@@ -759,7 +759,7 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage &msg) {
 
 	if (!oldProtocol && clientVersion != CLIENT_VERSION) {
 		ss.str(std::string());
-		ss << "Only clients with protocol " << CLIENT_VERSION_UPPER << "." << CLIENT_VERSION_LOWER;
+		ss << "Only clients with protocol " << oldProtocol << "." << clientVersion << "." << CLIENT_VERSION;
 		if (g_configManager().getBoolean(OLD_PROTOCOL, __FUNCTION__)) {
 			ss << " or 11.00";
 		}

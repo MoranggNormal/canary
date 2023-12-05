@@ -19,6 +19,17 @@ function IsRetroPVP()
 	return configManager.getBoolean(configKeys.TOGGLE_SERVER_IS_RETRO)
 end
 
+function getDistanceBetween(firstPosition, secondPosition)
+	local xDif = math.abs(firstPosition.x - secondPosition.x)
+	local yDif = math.abs(firstPosition.y - secondPosition.y)
+	local posDif = math.max(xDif, yDif)
+	if firstPosition.z ~= secondPosition.z then
+		posDif = posDif + 15
+	end
+	return posDif
+end
+
+
 -- NOTE: 0 is disabled.
 PARTY_PROTECTION = (IsRetroPVP() and 0) or 1
 ADVANCED_SECURE_MODE = (IsRetroPVP() and 0) or 1

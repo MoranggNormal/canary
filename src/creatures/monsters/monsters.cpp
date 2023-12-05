@@ -320,6 +320,17 @@ std::shared_ptr<MonsterType> Monsters::getMonsterTypeByRaceId(uint16_t raceId, b
 	return g_monsters().getMonsterType(it->second);
 }
 
+std::shared_ptr<MonsterType> Monsters::getMonsterTypeByCorpseId(uint16_t corpseId) const {
+	auto monster_race_map = g_game().getBestiaryList();
+	g_logger().debug("[{}] the monster with name '{}' already exist", __FUNCTION__, corpseId);
+	auto it = monster_race_map.find(corpseId);
+	if (it == monster_race_map.end()) {
+		return nullptr;
+	}
+
+	return g_monsters().getMonsterType(it->second);
+}
+
 bool Monsters::tryAddMonsterType(const std::string &name, const std::shared_ptr<MonsterType> mType) {
 	std::string lowerName = asLowerCaseString(name);
 	if (monsters.find(lowerName) != monsters.end()) {

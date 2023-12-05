@@ -237,6 +237,85 @@ int ItemTypeFunctions::luaItemTypeGetName(lua_State* L) {
 	return 1;
 }
 
+// pokemon
+
+int ItemTypeFunctions::luaItemTypeGetPokeName(lua_State* L) {
+	// itemType:getPokeName()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		pushString(L, itemType->pokeName);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeLevel(lua_State* L) {
+	// itemType:getPokeLevel()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeLevel);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeExperience(lua_State* L) {
+	// itemType:getPokeExperience()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeExperience);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeBoost(lua_State* L) {
+	// itemType:getPokeBoost()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeBoost);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeMaxHealth(lua_State* L) {
+	// itemType:getPokeMaxHealth()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeMaxHealth);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeHealth(lua_State* L) {
+	// itemType:getPokeHealth()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeHealth);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetPokeLove(lua_State* L) {
+	// itemType:getPokeLove()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->pokeLove);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int ItemTypeFunctions::luaItemTypeGetPluralName(lua_State* L) {
 	// itemType:getPluralName()
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);

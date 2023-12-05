@@ -46,6 +46,88 @@ CONDITION_EXHAUST = CONDITION_EXHAUST_WEAPON
 TALKTYPE_ORANGE_1 = TALKTYPE_MONSTER_SAY
 TALKTYPE_ORANGE_2 = TALKTYPE_MONSTER_YELL
 
+pokeBalls = {
+	pokeball = { emptyId = 44184, usedOn = 44185, usedOff = 44186, effectFail = 734, effectSucceed = 262, missile = 60, effectRelease = 308, chanceMultiplier = 3.0 },
+	-- greatball = {emptyId = 26660, usedOn = 26663, usedOff = 26675, effectFail = 738, effectSucceed = 739, missile = 57, effectRelease = 309, chanceMultiplier = 1.2},
+	-- superball = {emptyId = 26659, usedOn = 26669, usedOff = 26674, effectFail = 736, effectSucceed = 737, missile = 56, effectRelease = 879, chanceMultiplier = 1.3},
+	-- ultraball = {emptyId = 26688, usedOn = 26670, usedOff = 26681, effectFail = 740, effectSucceed = 741, missile = 58, effectRelease = 311, chanceMultiplier = 1.4},
+	-- premierball = {emptyId = 26683, usedOn = 26666, usedOff = 26678, effectFail = 321, effectSucceed = 322, missile = 129, effectRelease = 310, chanceMultiplier = 1.5},
+	-- safariball = {emptyId = 26685, usedOn = 26667, usedOff = 26679, effectFail = 323, effectSucceed = 324, missile = 128, effectRelease = 315, chanceMultiplier = 1.0},
+	-- lamp = {emptyId = 2272, usedOn = 2325, usedOff = 23255, effectFail = 734, effectSucceed = 735, missile = 55, effectRelease = 308, chanceMultiplier = 1.0}
+}
+
+function getPokeballKey(uid)
+	for key, value in pairs(balls) do
+		if uid == value.emptyId or uid == value.usedOn or uid == value.usedOff then
+			return key
+		end
+	end
+	return "pokeball"
+end
+
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg)
+	local player = Player(cid)
+	if player then
+		name = string.lower(name)
+		local monsterType = MonsterType(name)
+		if not monsterType then
+			print("WARNING: Monster " .. name .. " impossible to catch.")
+			player:sendCancelMessage("Sorry, not possible. This problem was reported.")
+			return false
+		end
+
+		local addBall
+		if dp == false then
+			addBall = player:addItem(44186, 1, false)
+		else
+			local depot = player:getInbox()
+			addBall = depot:addItem(44186, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+		end
+		if not addBall then
+			if dp == false then -- try send to CP because BP is full
+				local depot = player:getInbox()
+				addBall = depot:addItem(44186, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+				addEvent(doPlayerSendTextMessage, msg, cid, MESSAGE_EVENT_ADVANCE, "Since you are at maximum capacity, your ball was sent to CP.")
+				--				print("WARNING! Player " .. player:getName() .. " sending pokemon " .. name .. " to CP after first try.")
+				dp = true
+			else
+				addBall = player:addItem(44186, 1)
+				addEvent(doPlayerSendTextMessage, msg, cid, MESSAGE_STATUS_WARNING, "Pokemon lost. Your CP is full!")
+				print("WARNING! Player " .. player:getName() .. " lost pokemon " .. name .. " because CP is full.")
+			end
+		end
+		if addBall then
+			local baseHealth = monsterType:getMaxHealth()
+			-- local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost, 0))
+			local maxHealth = math.floor(baseHealth * player:getLevel())
+
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKENAME, name)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKELEVEL, 52345)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKEEXPERIENCE, 666)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKEBOOST, 15)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKEMAXHEALTH, maxHealth)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKEHEALTH, 10)
+			addBall:setAttribute(ITEM_ATTRIBUTE_POKELOVE, 566)
+
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKELEVEL, level)
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKEBOOST, boost)
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKEEXPERIENCE, 123)
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKEMAXHEALTH, maxHealth)
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKEHEALTH, maxHealth)
+			-- addBall:setAttribute(ITEM_ATTRIBUTE_POKELOVE, 0)
+			-- if dp == false then
+			-- 	player:refreshPokemonBar({}, {})
+			-- end
+			return true
+		else
+			print("ERROR! Player " .. player:getName() .. " lost pokemon " .. name .. " for unknown reason.")
+		end
+	end
+
+	print("WARNING! Player not found to add pokeball.")
+	return false
+end
+
 function pushThing(thing)
 	local t = { uid = 0, itemid = 0, type = 0, actionid = 0 }
 	if thing then
@@ -187,7 +269,7 @@ function getCreatureSummons(cid)
 
 	local result = {}
 	for _, summon in ipairs(c:getSummons()) do
-		result[#result + 1] = summon:getId()
+		result[#result+1] = summon:getId()
 	end
 	return result
 end
@@ -559,7 +641,7 @@ function getPlayersByIPAddress(ip, mask)
 	local result = {}
 	for _, player in ipairs(Game.getPlayers()) do
 		if bit.band(player:getIp(), mask) == masked then
-			result[#result + 1] = player:getId()
+			result[#result+1] = player:getId()
 		end
 	end
 	return result
@@ -568,7 +650,7 @@ end
 function getOnlinePlayers()
 	local result = {}
 	for _, player in ipairs(Game.getPlayers()) do
-		result[#result + 1] = player:getName()
+		result[#result+1] = player:getName()
 	end
 	return result
 end
@@ -577,7 +659,7 @@ function getPlayersByAccountNumber(accountNumber)
 	local result = {}
 	for _, player in ipairs(Game.getPlayers()) do
 		if player:getAccountId() == accountNumber then
-			result[#result + 1] = player:getId()
+			result[#result+1] = player:getId()
 		end
 	end
 	return result
@@ -859,7 +941,7 @@ function getPartyMembers(cid)
 
 	local result = { party:getLeader():getId() }
 	for _, member in ipairs(party:getMembers()) do
-		result[#result + 1] = member:getId()
+		result[#result+1] = member:getId()
 	end
 	return result
 end
@@ -875,7 +957,7 @@ function getMonsterTargetList(cid)
 	local result = {}
 	for _, creature in ipairs(monster:getTargetList()) do
 		if monster:isTarget(creature) then
-			result[#result + 1] = creature:getId()
+			result[#result+1] = creature:getId()
 		end
 	end
 	return result
@@ -892,7 +974,7 @@ function getMonsterFriendList(cid)
 	local result = {}
 	for _, creature in ipairs(monster:getFriendList()) do
 		if not creature:isRemoved() and creature:getPosition().z == z then
-			result[#result + 1] = creature:getId()
+			result[#result+1] = creature:getId()
 		end
 	end
 	return result

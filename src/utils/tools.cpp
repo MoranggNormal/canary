@@ -1140,12 +1140,26 @@ ItemAttribute_t stringToItemAttribute(const std::string &str) {
 		return ItemAttribute_t::WRITER;
 	} else if (str == "name") {
 		return ItemAttribute_t::NAME;
+	} else if (str == "pokeName") {
+		return ItemAttribute_t::POKENAME;
 	} else if (str == "article") {
 		return ItemAttribute_t::ARTICLE;
 	} else if (str == "pluralname") {
 		return ItemAttribute_t::PLURALNAME;
 	} else if (str == "weight") {
 		return ItemAttribute_t::WEIGHT;
+	} else if (str == "pokeLevel") {
+		return ItemAttribute_t::POKELEVEL;
+	} else if (str == "pokeBoost") {
+		return ItemAttribute_t::POKEBOOST;
+	} else if (str == "pokeExperience") {
+		return ItemAttribute_t::POKEEXPERIENCE;
+	} else if (str == "pokeMaxHealth") {
+		return ItemAttribute_t::POKEMAXHEALTH;
+	} else if (str == "pokeHealth") {
+		return ItemAttribute_t::POKEHEALTH;
+	} else if (str == "pokeLove") {
+		return ItemAttribute_t::POKELOVE;
 	} else if (str == "attack") {
 		return ItemAttribute_t::ATTACK;
 	} else if (str == "defense") {

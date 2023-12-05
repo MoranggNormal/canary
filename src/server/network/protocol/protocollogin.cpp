@@ -31,14 +31,17 @@ void ProtocolLogin::disconnectClient(const std::string &message) {
 void ProtocolLogin::getCharacterList(const std::string &accountDescriptor, const std::string &password) {
 	account::Account account(accountDescriptor);
 	account.setProtocolCompat(oldProtocol);
+	g_logger().warn("Account[{}] failed to load !", oldProtocol);
+	g_logger().warn("Account[{}] failed to  players!", account.getID());
 
 	if (oldProtocol && !g_configManager().getBoolean(OLD_PROTOCOL, __FUNCTION__)) {
 		disconnectClient(fmt::format("Only protocol version {}.{} is allowed.", CLIENT_VERSION_UPPER, CLIENT_VERSION_LOWER));
 		return;
-	} else if (!oldProtocol) {
-		disconnectClient(fmt::format("Only protocol version {}.{} or outdated 11.00 is allowed.", CLIENT_VERSION_UPPER, CLIENT_VERSION_LOWER));
-		return;
 	}
+	//  else if (!oldProtocol) {
+	// 	disconnectClient(fmt::format("Only protocol version {}.{} or outdated 11.00 is allowed.", oldProtocol, CLIENT_VERSION_LOWER));
+	// 	return;
+	// }
 
 	if (account.load() != account::ERROR_NO || !account.authenticate(password)) {
 		std::ostringstream ss;

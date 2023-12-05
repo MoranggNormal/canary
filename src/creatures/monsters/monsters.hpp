@@ -121,6 +121,7 @@ class MonsterType {
 		int32_t creatureSayEvent = -1;
 		int32_t thinkEvent = -1;
 		int32_t targetDistance = 1;
+		int32_t catchChance = 3;
 		int32_t runAwayHealth = 0;
 		int32_t health = 100;
 		int32_t healthMax = 100;
@@ -270,6 +271,7 @@ public:
 
 	std::shared_ptr<MonsterType> getMonsterType(const std::string &name, bool silent = false) const;
 	std::shared_ptr<MonsterType> getMonsterTypeByRaceId(uint16_t raceId, bool isBoss = false) const;
+	std::shared_ptr<MonsterType> getMonsterTypeByCorpseId(uint16_t corpseId) const;
 	bool tryAddMonsterType(const std::string &name, const std::shared_ptr<MonsterType> mType);
 	bool deserializeSpell(const std::shared_ptr<MonsterSpell> spell, spellBlock_t &sb, const std::string &description = "");
 

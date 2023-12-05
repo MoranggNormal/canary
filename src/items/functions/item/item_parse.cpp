@@ -18,6 +18,12 @@ void ItemParse::initParse(const std::string &tmpStrValue, pugi::xml_node attribu
 	ItemParse::parseDescription(tmpStrValue, valueAttribute, itemType);
 	ItemParse::parseRuneSpellName(tmpStrValue, valueAttribute, itemType);
 	ItemParse::parseWeight(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeLevel(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeBoost(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeExperience(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeMaxHealth(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeHealth(tmpStrValue, valueAttribute, itemType);
+	ItemParse::parsePokeLove(tmpStrValue, valueAttribute, itemType);
 	ItemParse::parseShowCount(tmpStrValue, valueAttribute, itemType);
 	ItemParse::parseArmor(tmpStrValue, valueAttribute, itemType);
 	ItemParse::parseDefense(tmpStrValue, valueAttribute, itemType);
@@ -135,6 +141,48 @@ void ItemParse::parseWeight(const std::string &tmpStrValue, pugi::xml_attribute 
 	std::string stringValue = tmpStrValue;
 	if (stringValue == "weight") {
 		itemType.weight = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeLevel(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeLevel") {
+		itemType.pokeLevel = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeBoost(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeBoost") {
+		itemType.pokeBoost = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeExperience(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeExperience") {
+		itemType.pokeExperience = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeMaxHealth(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeMaxHealth") {
+		itemType.pokeMaxHealth = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeHealth(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeHealth") {
+		itemType.pokeMaxHealth = pugi::cast<int32_t>(valueAttribute.value());
+	}
+}
+
+void ItemParse::parsePokeLove(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	std::string stringValue = tmpStrValue;
+	if (stringValue == "pokeLove") {
+		itemType.pokeLove = pugi::cast<int32_t>(valueAttribute.value());
 	}
 }
 

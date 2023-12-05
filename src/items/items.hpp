@@ -234,6 +234,7 @@ public:
 	uint16_t id = 0;
 
 	std::string name;
+	std::string pokeName;
 	std::string article;
 	std::string pluralName;
 	std::string description;
@@ -254,6 +255,12 @@ public:
 	uint32_t sellPrice = 0;
 	// Signed, because some items have negative weight, but this will only be necessary for the look so everything else will be uint32_t
 	int32_t weight = 0;
+	int32_t pokeLevel = 0;
+	int32_t pokeBoost = 0;
+	int32_t pokeExperience = 0;
+	int32_t pokeMaxHealth = 0;
+	int32_t pokeHealth = 0;
+	int32_t pokeLove = 0;
 	int32_t maxHitChance = -1;
 	int32_t decayTo = -1;
 	int32_t attack = 0;

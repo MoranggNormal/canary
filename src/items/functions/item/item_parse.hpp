@@ -16,11 +16,24 @@
 
 class ConditionDamage;
 
+	// int32_t pokeLevel = 0;
+	// int32_t pokeBoost = 0;
+	// int32_t pokeExperience = 0;
+	// int32_t pokeMaxHealth = 0;
+	// int32_t pokeHealth = 0;
+	// int32_t pokeLove = 0;
+
 const phmap::flat_hash_map<std::string, ItemParseAttributes_t> ItemParseAttributesMap = {
 	{ "type", ITEM_PARSE_TYPE },
 	{ "description", ITEM_PARSE_DESCRIPTION },
 	{ "runespellname", ITEM_PARSE_RUNESPELLNAME },
 	{ "weight", ITEM_PARSE_WEIGHT },
+	{ "pokeLevel", ITEM_PARSE_POKELEVEL },
+	{ "pokeBoost", ITEM_PARSE_POKEBOOST },
+	{ "pokeExperience", ITEM_PARSE_POKEEXPERIENCE },
+	{ "pokeMaxHealth", ITEM_PARSE_POKEMAXHEALTH },
+	{ "pokeHealth", ITEM_PARSE_POKEHEALTH },
+	{ "pokeLove", ITEM_PARSE_POKELOVE },
 	{ "showcount", ITEM_PARSE_SHOWCOUNT },
 	{ "armor", ITEM_PARSE_ARMOR },
 	{ "defense", ITEM_PARSE_DEFENSE },
@@ -248,13 +261,18 @@ const phmap::flat_hash_map<std::string, ImbuementTypes_t> ImbuementsTypeMap = {
 class ItemParse : public Items {
 public:
 	static void initParse(const std::string &tmpStrValue, pugi::xml_node attributeNode, pugi::xml_attribute valueAttribute, ItemType &itemType);
-
 private:
 	static void parseDummyRate(pugi::xml_node attributeNode, ItemType &itemType);
 	static void parseType(const std::string &tmpStrValue, pugi::xml_node attributeNode, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseDescription(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseRuneSpellName(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseWeight(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeLevel(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeBoost(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeExperience(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeMaxHealth(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeHealth(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
+	static void parsePokeLove(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseShowCount(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseArmor(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);
 	static void parseDefense(const std::string &tmpStrValue, pugi::xml_attribute valueAttribute, ItemType &itemType);

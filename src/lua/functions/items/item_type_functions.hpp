@@ -109,6 +109,15 @@ private:
 	static int luaItemTypeGetDescription(lua_State* L);
 	static int luaItemTypeGetSlotPosition(lua_State* L);
 
+	// pokemon
+	static int luaItemTypeGetPokeName(lua_State* L);
+	static int luaItemTypeGetPokeLevel(lua_State* L);
+	static int luaItemTypeGetPokeExperience(lua_State* L);
+	static int luaItemTypeGetPokeBoost(lua_State* L);
+	static int luaItemTypeGetPokeMaxHealth(lua_State* L);
+	static int luaItemTypeGetPokeHealth(lua_State* L);
+	static int luaItemTypeGetPokeLove(lua_State* L);
+
 	static int luaItemTypeGetCharges(lua_State* L);
 	static int luaItemTypeGetFluidSource(lua_State* L);
 	static int luaItemTypeGetCapacity(lua_State* L);

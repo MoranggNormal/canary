@@ -6,7 +6,6 @@
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
  * Website: https://docs.opentibiabr.com/
  */
-
 #pragma once
 
 #include "lua/scripts/luascript.hpp"
@@ -15,7 +14,12 @@ class MonsterTypeFunctions final : LuaScriptInterface {
 public:
 	static void init(lua_State* L) {
 		registerSharedClass(L, "MonsterType", "", MonsterTypeFunctions::luaMonsterTypeCreate);
+		registerSharedClass(L, "MonsterCorpse", "", MonsterTypeFunctions::luaMonsterTypeCorpseById);
+
 		registerMetaMethod(L, "MonsterType", "__eq", MonsterTypeFunctions::luaUserdataCompare);
+
+		// pokemon
+		registerMethod(L, "MonsterType", "catchChance", MonsterTypeFunctions::luaMonsterTypeCatchChance);
 
 		registerMethod(L, "MonsterType", "isAttackable", MonsterTypeFunctions::luaMonsterTypeIsAttackable);
 		registerMethod(L, "MonsterType", "isConvinceable", MonsterTypeFunctions::luaMonsterTypeIsConvinceable);
@@ -147,6 +151,10 @@ private:
 	static void createMonsterTypeLootLuaTable(lua_State* L, const std::vector<LootBlock> &lootList);
 
 	static int luaMonsterTypeCreate(lua_State* L);
+	static int luaMonsterTypeCorpseById(lua_State* L);
+
+	// pokemon
+	static int luaMonsterTypeCatchChance(lua_State* L);
 
 	static int luaMonsterTypeIsAttackable(lua_State* L);
 	static int luaMonsterTypeIsConvinceable(lua_State* L);

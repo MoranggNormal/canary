@@ -45,6 +45,13 @@ enum ItemAttribute_t : uint64_t {
 	CUSTOM = 32,
 	LOOTMESSAGE_SUFFIX = 33,
 	STORE_INBOX_CATEGORY = 34,
+	POKENAME = 35,
+	POKELEVEL = 36,
+	POKEBOOST = 37,
+	POKEEXPERIENCE = 38,
+	POKEMAXHEALTH = 39,
+	POKEHEALTH = 40,
+	POKELOVE = 41,
 };
 
 enum ItemDecayState_t : uint8_t {

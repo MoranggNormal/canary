@@ -12,7 +12,6 @@
 #include "enums/item_attribute.hpp"
 #include "items/functions/item/custom_attribute.hpp"
 #include "utils/tools.hpp"
-
 class ItemAttributeHelper {
 public:
 	bool isAttributeInteger(ItemAttribute_t type) const {
@@ -22,6 +21,12 @@ public:
 			case ItemAttribute_t::UNIQUEID:
 			case ItemAttribute_t::DATE:
 			case ItemAttribute_t::WEIGHT:
+			case ItemAttribute_t::POKELEVEL:
+			case ItemAttribute_t::POKEBOOST:
+			case ItemAttribute_t::POKEEXPERIENCE:
+			case ItemAttribute_t::POKEMAXHEALTH:
+			case ItemAttribute_t::POKEHEALTH:
+			case ItemAttribute_t::POKELOVE:
 			case ItemAttribute_t::ATTACK:
 			case ItemAttribute_t::DEFENSE:
 			case ItemAttribute_t::EXTRADEFENSE:
@@ -53,6 +58,7 @@ public:
 			case ItemAttribute_t::TEXT:
 			case ItemAttribute_t::WRITER:
 			case ItemAttribute_t::NAME:
+			case ItemAttribute_t::POKENAME:
 			case ItemAttribute_t::ARTICLE:
 			case ItemAttribute_t::PLURALNAME:
 			case ItemAttribute_t::SPECIAL:
